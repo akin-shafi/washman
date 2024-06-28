@@ -360,7 +360,7 @@ export async function getServerSideProps(context) {
 	}
 
 	try {
-		const END_POINT = process.env.NEXT_PUBLIC_API_URL;
+		const END_POINT = process.env.NEXT_API_URL;
 
 		// Fetch customers data
 		const customerResponse = await fetch(`${END_POINT}/customers`);

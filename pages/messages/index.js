@@ -45,7 +45,7 @@ function MessageList({ messages, categories, messageError }) {
 	}
 
 	const fetchSubject = async (subject) => {
-		const api = NEXT_PUBLIC_API_URL;
+		const api = NEXT_API_URL;
 		const response = await fetch(`${api}/messages?subject=${subject}`);
 		if (response.ok) {
 			const data = await response.json();
@@ -170,7 +170,7 @@ export async function getServerSideProps(context) {
 			};
 		}
 
-		const api = process.env.NEXT_PUBLIC_API_URL;
+		const api = process.env.NEXT_API_URL;
 		const { query } = context;
 		const { subject } = query;
 		const queryString = subject ? subject : "";

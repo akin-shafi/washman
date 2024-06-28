@@ -62,7 +62,7 @@ function UserList({ users }) {
 	const handleUpdateUser = async (e) => {
 		e.preventDefault();
 		// Add logic to handle updating user data
-		// const api = process.env.NEXT_PUBLIC_API_URL;
+		// const api = process.env.NEXT_API_URL;
 		// const response = await fetch(`${api}/users/${selectedUser.id}`, {
 		const response = await fetch(`/api/users/${selectedUser.id}`, {
 			method: "PUT",
@@ -350,7 +350,7 @@ function UserList({ users }) {
 export default UserList;
 
 export async function getServerSideProps() {
-	let api = process.env.NEXT_PUBLIC_API_URL;
+	let api = process.env.NEXT_API_URL;
 
 	const response = await fetch(`${api}/users`);
 	const data = await response.json();

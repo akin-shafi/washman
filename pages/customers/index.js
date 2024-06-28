@@ -83,7 +83,7 @@ function CustomerList({ customers, customerError }) {
 		e.preventDefault();
 
 		// Add logic to handle updating customer data
-		const END_POINT = process.env.NEXT_PUBLIC_API_URL;
+		const END_POINT = process.env.NEXT_API_URL;
 		const response = await fetch(
 			`${END_POINT}/customers/${selectedCustomer.id}`,
 			{
@@ -438,7 +438,7 @@ export async function getServerSideProps(context) {
 			};
 		}
 
-		const END_POINT = process.env.NEXT_PUBLIC_API_URL;
+		const END_POINT = process.env.NEXT_API_URL;
 		const response = await fetch(`${END_POINT}/customers`);
 		const data = await response.json();
 
