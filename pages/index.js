@@ -255,7 +255,7 @@ const Home = ({ services, error, endpoint }) => {
 						<div className="row">
 							<div className="col-xl-12">
 								<div className="section-title text-center mb-3">
-									<h2 className="text-white">Our Services - {endpoint}</h2>
+									<h2 className="text-white">Our Services...</h2>
 								</div>
 							</div>
 						</div>
