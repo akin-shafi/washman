@@ -1,11 +1,11 @@
 import { sendResetPasswordEmail } from "@/lib/emailActions";
 import User from "@/models/User";
 import crypto from "crypto";
-import sequelize from "@/utils/db.js"; // Assuming you have a DB connection utility
+import dbConnect from "@/utils/db"; // Assuming you have a Mongoose connection utility
 
 export default async function handler(req, res) {
 	if (req.method === "POST") {
-		await sequelize.sync(); // Connect to the database
+		await dbConnect(); // Connect to MongoDB
 		const { email } = req.body;
 
 		try {

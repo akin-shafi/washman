@@ -1,19 +1,17 @@
 // Verify 2fa
 import User from "@/models/User";
-import sequelize from "@/utils/db";
+import dbConnect from "@/utils/db"; // Ensure Mongoose is connected
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "./[...nextauth]"; // Adjust the path to your nextauth.js file
-import { encode, decode } from "next-auth/jwt"; // Ensure next-auth JWT utilities are imported
+import { encode } from "next-auth/jwt"; // Ensure next-auth JWT utilities are imported
 
 export default async function handler(req, res) {
 	if (req.method === "POST") {
 		const { email, twoFactorToken } = req.body;
 
 		try {
-			await sequelize.authenticate();
-			const user = await User.findOne({
-				where: { email },
-			});
+			await dbConnect(); // Ensure the database is connected
+			const user = await User.findOne({ email });
 
 			if (!user) {
 				return res.status(400).json({ error: "User not found" });
@@ -27,10 +25,9 @@ export default async function handler(req, res) {
 				return res.status(400).json({ error: "Invalid or expired 2FA token" });
 			}
 
-			await user.update({
-				twoFactorToken: null,
-				twoFactorExpires: null,
-			});
+			user.twoFactorToken = null;
+			user.twoFactorExpires = null;
+			await user.save();
 
 			const session = await getServerSession(req, res, authOptions);
 

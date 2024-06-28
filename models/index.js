@@ -1,51 +1,37 @@
 // models/index.js
-import Sequelize from "sequelize";
+import mongoose from "mongoose";
 import dotenv from "dotenv";
-import config from "../config/config.js"; // Adjust with your config specifics
-import User from "./User";
-import Customer from "./Customer";
-import Schedule from "./Schedule"; // Import the Schedule model
-import Message from "./Message"; // Import the Message model
-import Service from "./Service"; // Import the Service model
+import User from "./User"; // Update with your Mongoose models
+import Customer from "./Customer"; // Update with your Mongoose models
+import Schedule from "./Schedule"; // Update with your Mongoose models
+import Message from "./Message"; // Update with your Mongoose models
+import Service from "./Service"; // Update with your Mongoose models
 
 // Load environment variables from .env file
 dotenv.config();
 
-const env = process.env.NODE_ENV || "development";
-const dbConfig = config[env];
+const dbUrl = process.env.MONGODB_URI;
 
-let sequelize;
-
-if (dbConfig.use_env_variable) {
-	sequelize = new Sequelize(process.env[dbConfig.use_env_variable], {
-		dialect: dbConfig.dialect,
-	});
-} else {
-	sequelize = new Sequelize(
-		dbConfig.database,
-		dbConfig.username,
-		dbConfig.password,
-		{
-			host: dbConfig.host,
-			dialect: dbConfig.dialect,
-		}
-	);
-}
-
-const models = {
-	User: User.init(sequelize, Sequelize),
-	Customer: Customer.init(sequelize, Sequelize),
-	Schedule: Schedule.init(sequelize, Sequelize),
-	Message: Message.init(sequelize, Sequelize),
-	Service: Service.init(sequelize, Sequelize),
-	// Add other models here
-};
-
-Object.keys(models).forEach((modelName) => {
-	if (models[modelName].associate) {
-		models[modelName].associate(models);
-	}
+// Connect to MongoDB using Mongoose
+mongoose.connect(dbUrl, {
+	useUnifiedTopology: true,
 });
 
-export { sequelize };
-export default models;
+// Access the default connection to MongoDB
+const db = mongoose.connection;
+
+// Handle connection errors
+db.on("error", console.error.bind(console, "MongoDB connection error:"));
+db.once("open", () => {
+	console.log("Connected to MongoDB");
+});
+
+// Export your Mongoose models
+export default {
+	User,
+	Customer,
+	Schedule,
+	Message,
+	Service,
+	// Add other models here
+};

@@ -1,19 +1,34 @@
-// models/account.js
-import { DataTypes } from "sequelize";
-import sequelize from "../utils/db";
+import mongoose from "mongoose";
 
-const Account = sequelize.define("Account", {
-	id: {
-		type: DataTypes.INTEGER,
-		autoIncrement: true,
-		primaryKey: true,
+const { Schema } = mongoose;
+
+// Define the schema for Account
+const accountSchema = new Schema(
+	{
+		userId: {
+			type: Schema.Types.ObjectId,
+			ref: "User", // Reference to the User model
+			required: true,
+		},
+		provider: {
+			type: String,
+			required: true,
+		},
+		providerAccountId: {
+			type: String,
+			required: true,
+		},
+		refreshToken: String,
+		accessToken: String,
+		accessTokenExpires: Date,
 	},
-	userId: DataTypes.INTEGER,
-	provider: DataTypes.STRING,
-	providerAccountId: DataTypes.STRING,
-	refresh_token: DataTypes.STRING,
-	access_token: DataTypes.STRING,
-	access_token_expires: DataTypes.DATE,
-});
+	{
+		collection: "accounts", // Optional: Specify the collection name if different from model name
+		timestamps: true, // Enable timestamps (createdAt, updatedAt)
+	}
+);
+
+// Create a model based on the schema
+const Account = mongoose.model("Account", accountSchema);
 
 export default Account;

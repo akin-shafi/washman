@@ -1,39 +1,39 @@
-// models/Customer.js
-import { Sequelize, DataTypes } from "sequelize";
-import sequelize from "../utils/db.js"; // Assuming this is the correct path to your Sequelize connection
+import mongoose from "mongoose";
 
-const Customer = sequelize.define(
-	"customers",
+const { Schema } = mongoose;
+
+// Define the schema for Customer
+const customerSchema = new Schema(
 	{
-		// Assuming you have fields such as id, firstName, lastName
-		first_name: {
-			type: DataTypes.STRING,
-			allowNull: false,
+		firstName: {
+			type: String,
+			required: true,
 		},
-		last_name: {
-			type: DataTypes.STRING,
-			allowNull: false,
+		lastName: {
+			type: String,
+			required: true,
 		},
 		email: {
-			type: DataTypes.STRING,
-			allowNull: false,
+			type: String,
+			required: true,
 		},
 		phone: {
-			type: DataTypes.STRING,
-			allowNull: false,
+			type: String,
+			required: true,
 		},
 		address: {
-			type: DataTypes.STRING,
-			allowNull: false,
+			type: String,
+			required: true,
 		},
-
-		// Add other fields as necessary
 	},
 	{
-		sequelize,
-		modelName: "customers",
-		timestamps: false,
+		collection: "customers", // Optional: Specify the collection name if different from model name
+		timestamps: true, // Enable timestamps (createdAt, updatedAt)
 	}
 );
+
+// Create a model based on the schema
+const Customer =
+	mongoose.models.Customer || mongoose.model("Customer", customerSchema);
 
 export default Customer;

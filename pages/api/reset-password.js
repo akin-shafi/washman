@@ -1,12 +1,10 @@
 import User from "@/models/User";
-import sequelize from "@/utils/db";
 import crypto from "crypto";
-// import bcrypt from "bcryptjs";
-import { Op } from "sequelize"; // Import Op from sequelize
+import dbConnect from "@/utils/db"; // Ensure Mongoose is connected
 
 export default async function handler(req, res) {
 	if (req.method === "POST") {
-		await sequelize.sync(); // Ensure the database is connected
+		await dbConnect(); // Ensure the database is connected
 		const { token, newPassword } = req.body;
 
 		try {
@@ -16,23 +14,18 @@ export default async function handler(req, res) {
 				.digest("hex");
 
 			const user = await User.findOne({
-				where: {
-					resetPasswordToken: hashedToken,
-					resetPasswordExpires: { [Op.gt]: Date.now() }, // Use Op.gt
-				},
+				resetPasswordToken: hashedToken,
+				resetPasswordExpires: { $gt: Date.now() },
 			});
 
 			if (!user) {
 				return res.status(400).json({ message: "Invalid or expired token" });
 			}
 
-			// const hashedPassword = await bcrypt.hash(newPassword, 10);
-
-			await user.update({
-				password: newPassword,
-				resetPasswordToken: null,
-				resetPasswordExpires: null,
-			});
+			user.password = newPassword;
+			user.resetPasswordToken = null;
+			user.resetPasswordExpires = null;
+			await user.save();
 
 			res.status(200).json({ message: "Password has been reset successfully" });
 		} catch (error) {

@@ -3,8 +3,15 @@ import GitHubProvider from "next-auth/providers/github";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 import User from "@/models/User";
-import sequelize from "@/utils/db";
 import { generateAndSendTwoFactorToken } from "@/pages/api/twoFactorAuth";
+import mongoose from "mongoose";
+
+// Ensure mongoose connection is established
+if (!mongoose.connection.readyState) {
+	mongoose.connect(process.env.MONGODB_URI, {
+		useUnifiedTopology: true,
+	});
+}
 
 export const authOptions = {
 	providers: [
@@ -22,16 +29,15 @@ export const authOptions = {
 			},
 			async authorize(credentials) {
 				try {
-					await sequelize.authenticate();
-					const user = await User.findOne({
-						where: { email: credentials.email },
-					});
+					// Find the user by email using Mongoose
+					const user = await User.findOne({ email: credentials.email });
 
 					if (!user) {
 						console.error("No user found with this email");
 						throw new Error("No user found with this email");
 					}
 
+					// Compare the provided password with the stored hashed password
 					const isValidPassword = await bcrypt.compare(
 						credentials.password,
 						user.password
@@ -41,12 +47,13 @@ export const authOptions = {
 						console.error("Incorrect password");
 						throw new Error("Incorrect password");
 					}
+
 					console.log("twoFactorEnabled Checker:", user.twoFactorEnabled);
 					if (user.twoFactorEnabled == true) {
 						await generateAndSendTwoFactorToken(user);
 						console.log("Two-factor token generated and sent");
 						return {
-							id: user.id,
+							id: user._id,
 							email: user.email,
 							name: user.name,
 							twoFactorEnabled: true,
@@ -58,7 +65,7 @@ export const authOptions = {
 						"User authenticated successfully without two-factor authentication"
 					);
 					return {
-						id: user.id,
+						id: user._id,
 						email: user.email,
 						name: user.name,
 						twoFactorEnabled: false,

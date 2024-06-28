@@ -1,37 +1,39 @@
-import { Model, DataTypes } from "sequelize";
-import sequelize from "../utils/db.js"; // Assuming this is the correct path to your Sequelize connection
+import mongoose from "mongoose";
 
-class Message extends Model {}
-Message.init(
+const { Schema } = mongoose;
+
+// Define the schema for Message
+const messageSchema = new Schema(
 	{
 		name: {
-			type: DataTypes.STRING,
-			allowNull: false,
+			type: String,
+			required: true,
 		},
 		email: {
-			type: DataTypes.STRING,
-			allowNull: false,
+			type: String,
+			required: true,
 		},
 		phone: {
-			type: DataTypes.STRING,
-			allowNull: false,
+			type: String,
+			required: true,
 		},
 		subject: {
-			type: DataTypes.STRING,
-			allowNull: false,
+			type: String,
+			required: true,
 		},
 		body: {
-			type: DataTypes.TEXT,
-			allowNull: false,
+			type: String,
+			required: true,
 		},
-
-		// Add other fields as necessary
 	},
 	{
-		sequelize,
-		modelName: "messages",
-		timestamps: true, // Enable timestamps if you want createdAt and updatedAt
+		collection: "messages", // Optional: Specify the collection name if different from model name
+		timestamps: true, // Enable timestamps (createdAt, updatedAt)
 	}
 );
+
+// Create a model based on the schema
+const Message =
+	mongoose.models.Message || mongoose.model("Message", messageSchema);
 
 export default Message;

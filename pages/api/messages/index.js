@@ -1,68 +1,36 @@
-// import models from "@/models/Message";
-
-// const { Message } = models;
-
-// export default async function handler(req, res) {
-// 	const { subject } = req.query;
-// 	try {
-// 		if (req.method === "GET") {
-// 			if (subject) {
-// 				// Fetch messages by subject
-// 				const messages = await Message.findAll({
-// 					where: { subject },
-// 				});
-// 				if (!messages || messages.length === 0) {
-// 					return res.status(404).json({ error: "No messages found" });
-// 				}
-// 				return res.status(200).json(messages);
-// 			} else {
-// 				// Fetch all messages
-// 				const messages = await Message.findAll();
-// 				return res.status(200).json(messages);
-// 			}
-// 		} else if (req.method === "POST") {
-// 			const message = req.body;
-// 			const newMessage = await Message.create(message);
-// 			return res.status(201).json(newMessage);
-// 		} else {
-// 			res.status(405).end(); // Method Not Allowed
-// 		}
-// 	} catch (error) {
-// 		res.status(500).json({ error: error.message });
-// 	}
-// }
-
+import dbConnect from "@/utils/db";
 import Message from "@/models/Message";
 
 export default async function handler(req, res) {
+	await dbConnect(); // Ensure database connection is established
+
 	const { subject } = req.query;
 
 	if (req.method === "GET") {
 		try {
+			let messages;
 			if (subject) {
 				// Fetch messages by subject
-				const messages = await Message.findAll({
-					where: { subject },
-				});
+				messages = await Message.find({ subject });
 				if (!messages || messages.length === 0) {
 					return res.status(404).json({ error: "No messages found" });
 				}
-				return res.status(200).json(messages);
 			} else {
-				const messages = await Message.findAll();
-				res.status(200).json(messages);
+				messages = await Message.find();
 			}
+			res.status(200).json(messages);
 		} catch (error) {
 			res.status(500).json({ error: error.message });
 		}
-	}
-	// handle other methods similarly
-	if (req.method === "POST") {
+	} else if (req.method === "POST") {
 		try {
-			const newMessage = await Message.create(req.body);
+			const newMessage = new Message(req.body);
+			await newMessage.save();
 			res.status(201).json(newMessage);
 		} catch (error) {
 			res.status(500).json({ error: error.message });
 		}
+	} else {
+		res.status(405).json({ error: "Method not allowed" });
 	}
 }

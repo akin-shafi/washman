@@ -1,29 +1,30 @@
-// models/Service.js
-import { Model, DataTypes } from "sequelize";
-import sequelize from "../utils/db.js"; // Ensure this path is correct
+import mongoose from "mongoose";
 
-class Service extends Model {}
+const { Schema } = mongoose;
 
-Service.init(
+// Define the schema for Service
+const serviceSchema = new Schema(
 	{
 		heading: {
-			type: DataTypes.STRING,
-			allowNull: false,
+			type: String,
+			required: true,
 		},
 		text: {
-			type: DataTypes.STRING,
-			allowNull: false,
+			type: String,
+			required: true,
 		},
 		file: {
-			type: DataTypes.STRING,
-			allowNull: false,
+			type: String,
+			required: true,
 		},
 	},
 	{
-		sequelize,
-		modelName: "services",
+		collection: "services", // Optional: Specify the collection name if different from model name
 		timestamps: false, // Disable timestamps
 	}
 );
+
+// Create a model based on the schema
+const Service = mongoose.model("Service", serviceSchema);
 
 export default Service;

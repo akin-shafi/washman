@@ -39,8 +39,8 @@ function CustomerList({ customers, customerError }) {
 				"Content-Type": "application/json",
 			},
 			body: JSON.stringify({
-				first_name: firstName,
-				last_name: lastName,
+				firstName: firstName,
+				lastName: lastName,
 				email: customerEmail,
 				phone: customerPhone,
 				address: customerAddress,
@@ -71,8 +71,8 @@ function CustomerList({ customers, customerError }) {
 	const handleCloseEditCustomer = () => setShowModal(false);
 	const handleEditCustomer = (customer) => {
 		setSelectedCustomer(customer);
-		setFirstName(customer.first_name);
-		setLastName(customer.last_name);
+		setFirstName(customer.firstName);
+		setLastName(customer.lastName);
 		setCustomerEmail(customer.email);
 		setCustomerPhone(customer.phone);
 		setCustomerAddress(customer.address);
@@ -92,8 +92,8 @@ function CustomerList({ customers, customerError }) {
 					"Content-Type": "application/json",
 				},
 				body: JSON.stringify({
-					first_name: firstName,
-					last_name: lastName,
+					firstName: firstName,
+					lastName: lastName,
 					email: customerEmail,
 					phone: customerPhone,
 					address: customerAddress,
@@ -127,14 +127,17 @@ function CustomerList({ customers, customerError }) {
 		// Check if customers is an array before setting filteredCustomers
 		if (Array.isArray(customers)) {
 			setFilteredCustomers(
-				customers.filter(
-					(customer) =>
-						customer.first_name.toLowerCase().includes(search.toLowerCase()) ||
-						customer.last_name.toLowerCase().includes(search.toLowerCase()) ||
+				customers.filter((customer) => {
+					// Ensure customer object is valid before accessing its properties
+					if (!customer) return false; // Check if customer is undefined or null
+					return (
+						customer.firstName.toLowerCase().includes(search.toLowerCase()) ||
+						customer.lastName.toLowerCase().includes(search.toLowerCase()) ||
 						customer.email.toLowerCase().includes(search.toLowerCase()) ||
 						customer.phone.includes(search) ||
 						customer.address.toLowerCase().includes(search.toLowerCase())
-				)
+					);
+				})
 			);
 		}
 	}, [search, customers]);
@@ -210,14 +213,14 @@ function CustomerList({ customers, customerError }) {
 											</thead>
 											<tbody>
 												{currentCustomers.map((customer, index) => (
-													<tr key={customer.id}>
+													<tr key={index}>
 														<td>{indexOfFirstCustomer + index + 1}</td>
 														<td>
 															<Link
 																className="link-brand"
 																href={`customers/${customer.id}`}
 																passHref>
-																{customer.first_name} {customer.last_name}
+																{customer.firstName} {customer.lastName}
 															</Link>
 														</td>
 														<td>{customer.email}</td>
@@ -426,6 +429,7 @@ function CustomerList({ customers, customerError }) {
 export default CustomerList;
 
 export async function getServerSideProps(context) {
+	const END_POINT = process.env.NEXT_API_URL;
 	try {
 		const session = await getSession(context);
 		const email = session?.user?.email;
@@ -438,7 +442,6 @@ export async function getServerSideProps(context) {
 			};
 		}
 
-		const END_POINT = process.env.NEXT_API_URL;
 		const response = await fetch(`${END_POINT}/customers`);
 		const data = await response.json();
 

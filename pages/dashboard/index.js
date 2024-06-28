@@ -35,8 +35,8 @@ function Dashboard({
 				"Content-Type": "application/json",
 			},
 			body: JSON.stringify({
-				first_name: firstName,
-				last_name: lastName,
+				firstName: firstName,
+				lastName: lastName,
 				email: customerEmail,
 				phone: customerPhone,
 				address: customerAddress,
@@ -349,6 +349,7 @@ import { getSession } from "next-auth/react";
 
 export async function getServerSideProps(context) {
 	const session = await getSession(context);
+	const END_POINT = process.env.NEXT_API_URL;
 	const email = session?.user?.email;
 	if (!session || session.user.status === "2FA") {
 		return {
@@ -360,8 +361,6 @@ export async function getServerSideProps(context) {
 	}
 
 	try {
-		const END_POINT = process.env.NEXT_API_URL;
-
 		// Fetch customers data
 		const customerResponse = await fetch(`${END_POINT}/customers`);
 		const customerData = await customerResponse.json();
@@ -395,11 +394,11 @@ export async function getServerSideProps(context) {
 				schedules: [],
 				messages: [],
 				customerError:
-					"Error fetching customer data: " + error.message + "END_POINT",
+					"Error fetching customer data: " + error.message + `${END_POINT}`,
 				scheduleError:
-					"Error fetching schedule data: " + error.message + "END_POINT",
+					"Error fetching schedule data: " + error.message + `${END_POINT}`,
 				messageError:
-					"Error fetching message data: " + error.message + "END_POINT",
+					"Error fetching message data: " + error.message + `${END_POINT}`,
 			},
 		};
 	}

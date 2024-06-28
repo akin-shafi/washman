@@ -1,16 +1,32 @@
 // models/session.js
-import { DataTypes } from "sequelize";
-import sequelize from "../utils/db";
+import mongoose from "mongoose";
 
-const Session = sequelize.define("Session", {
-	id: {
-		type: DataTypes.INTEGER,
-		autoIncrement: true,
-		primaryKey: true,
+const { Schema } = mongoose;
+
+// Define the schema for Session
+const sessionSchema = new Schema(
+	{
+		userId: {
+			type: Schema.Types.ObjectId, // Assuming userId is referencing a User document
+			ref: "User", // Reference to the User model
+			required: true,
+		},
+		expires: {
+			type: Date,
+			required: true,
+		},
+		sessionToken: {
+			type: String,
+			required: true,
+		},
 	},
-	userId: DataTypes.INTEGER,
-	expires: DataTypes.DATE,
-	sessionToken: DataTypes.STRING,
-});
+	{
+		collection: "sessions", // Optional: Specify the collection name if different from model name
+		timestamps: true, // Enable timestamps (createdAt, updatedAt)
+	}
+);
+
+// Create a model based on the schema
+const Session = mongoose.model("Session", sessionSchema);
 
 export default Session;

@@ -1,37 +1,39 @@
-// models/schedule.js
-import { Model, DataTypes } from "sequelize";
-import sequelize from "../utils/db.js"; // Ensure this path is correct
+import mongoose from "mongoose";
 
-class Schedule extends Model {}
+const { Schema } = mongoose;
 
-Schedule.init(
+// Define the schema for Schedule
+const scheduleSchema = new Schema(
 	{
 		name: {
-			type: DataTypes.STRING,
-			allowNull: false,
+			type: String,
+			required: true,
 		},
 		phone: {
-			type: DataTypes.STRING,
-			allowNull: false,
+			type: String,
+			required: true,
 		},
 		address: {
-			type: DataTypes.STRING,
-			allowNull: false,
+			type: String,
+			required: true,
 		},
-		pickup_date: {
-			type: DataTypes.DATE,
-			allowNull: false,
+		pickupDate: {
+			type: Date,
+			required: true,
 		},
-		delivery_date: {
-			type: DataTypes.DATE,
-			allowNull: false,
+		deliveryDate: {
+			type: Date,
+			required: true,
 		},
 	},
 	{
-		sequelize,
-		modelName: "schedules",
-		// timestamps: false, // Disable timestamps
+		collection: "schedules", // Optional: Specify the collection name if different from model name
+		timestamps: true, // Enable timestamps (createdAt, updatedAt)
 	}
 );
+
+// Create a model based on the schema
+const Schedule =
+	mongoose.models.Schedule || mongoose.model("Schedule", scheduleSchema);
 
 export default Schedule;

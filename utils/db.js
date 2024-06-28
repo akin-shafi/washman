@@ -1,30 +1,40 @@
-import { Sequelize } from "sequelize";
+import mongoose from "mongoose";
 
-const customLogger = (msg) => {
-	console.log("Custom Logger: ", msg); 
-};
-const sequelize = new Sequelize(process.env.DATABASE_URL, {
-	dialect: "mysql", // or 'mysql' or any other dialect you're using
-	logging: customLogger, // Disable logging
-});
+const MONGODB_URI = process.env.MONGODB_URI;
 
-const connect = async () => {
-	try {
-		await sequelize.authenticate();
-		console.log("Database connected successfully.");
-	} catch (error) {
-		console.error("Unable to connect to the database:", error);
+if (!MONGODB_URI) {
+	throw new Error(
+		"Please define the MONGODB_URI environment variable inside .env.local"
+	);
+}
+
+/**
+ * Global is used here to maintain a cached connection across hot reloads in development.
+ * This prevents connections growing exponentially during API Route usage.
+ */
+let cached = global.mongoose;
+
+if (!cached) {
+	cached = global.mongoose = { conn: null, promise: null };
+}
+
+async function dbConnect() {
+	if (cached.conn) {
+		return cached.conn;
 	}
-};
 
-const syncDatabase = async () => {
-	try {
-		await sequelize.sync({ alter: true }); // or any other sync options you need
-		console.log("Database synchronized successfully.");
-	} catch (error) {
-		console.error("Error synchronizing the database:", error);
+	if (!cached.promise) {
+		const opts = {
+			useUnifiedTopology: true,
+			bufferCommands: false,
+		};
+
+		cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongoose) => {
+			return mongoose;
+		});
 	}
-};
+	cached.conn = await cached.promise;
+	return cached.conn;
+}
 
-export { sequelize, connect, syncDatabase };
-export default sequelize;
+export default dbConnect;
