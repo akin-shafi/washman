@@ -15,26 +15,6 @@ const Home = ({ services, error }) => {
 		comment: "",
 	});
 
-	// useEffect(() => {
-	// 	async function fetchServiceData() {
-	// 		try {
-	// 			const API = process.env.NEXT_API_URL;
-	// 			const response = await axios.get(`${API}/services`);
-	// 			const data = response.data;
-	// 			setServiceData(data);
-	// 		} catch (error) {
-	// 			console.error("Error fetching service data:", error);
-	// 		} finally {
-	// 			setIsLoading(false);
-	// 		}
-	// 	}
-	// 	fetchServiceData();
-	// }, []);
-
-	// if (isLoading) {
-	// 	return <h2 className="text-white">Loading...</h2>;
-	// }
-
 	const openModal = () => {
 		setModalIsOpen(true);
 	};
@@ -587,7 +567,7 @@ export async function getServerSideProps() {
 		};
 	} catch (error) {
 		console.error("Error fetching data see:", error);
-		let errorMessage = `Error fetching data from the database.`;
+		let errorMessage = `Error fetching data from the database. ${error}`;
 		if (error.response) {
 			// The request was made and the server responded with a status code
 			// that falls out of the range of 2xx
