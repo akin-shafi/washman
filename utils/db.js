@@ -1,7 +1,7 @@
 import { Sequelize } from "sequelize";
 
 const customLogger = (msg) => {
-	console.log("Custom Logger: ", msg);
+	console.log("Custom Logger: ", msg); 
 };
 const sequelize = new Sequelize(process.env.DATABASE_URL, {
 	dialect: "mysql", // or 'mysql' or any other dialect you're using
