@@ -30,14 +30,17 @@ function SignIn() {
 			setError("Invalid email or password");
 		} else {
 			setError("");
-			if (session.user.twoFactorEnabled == true) {
-				router.push({
-					pathname: "/verification",
-					query: { email },
-				});
-			} else {
-				router.push("/dashboard");
-			}
+			console.log("twoFactorEnabled:", session.user.twoFactorEnabled)
+			// if (session.user.twoFactorEnabled == true) {
+			// 	router.push({
+			// 		pathname: "/verification",
+			// 		query: { email },
+			// 	});
+			// } else {
+			// 	router.push("/dashboard");
+			// }
+			router.push("/dashboard");
+
 		}
 
 		setLoading(false); // Stop loading regardless of success or failure
