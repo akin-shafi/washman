@@ -30,7 +30,7 @@ function SignIn() {
 			setError("Invalid email or password");
 		} else {
 			setError("");
-			if (session?.user?.twoFactorEnabled == true) {
+			if (session.user.twoFactorEnabled == true) {
 				router.push({
 					pathname: "/verification",
 					query: { email },

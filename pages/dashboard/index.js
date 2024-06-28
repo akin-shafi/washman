@@ -352,14 +352,15 @@ export async function getServerSideProps(context) {
 	const END_POINT =
 		process.env.NEXT_PUBLIC_NEXT_API_URL || "https://washmanapp.vercel.app/api";
 	const email = session?.user?.email;
-	if (!session || session.user.twoFactorEnabled == true) {
-		return {
-			redirect: {
-				destination: `${process.env.VERIFY_URL}?email=${email}`, //redirect to login page
-				permanent: false,
-			},
-		};
-	}
+	console.log("Show Email:", email);
+	// if (!session || session.user.twoFactorEnabled == true) {
+	// 	return {
+	// 		redirect: {
+	// 			destination: `${process.env.VERIFY_URL}?email=${email}`, //redirect to login page
+	// 			permanent: false,
+	// 		},
+	// 	};
+	// }
 
 	try {
 		// Fetch customers data
