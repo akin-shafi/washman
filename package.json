@@ -16,7 +16,7 @@
     "bcryptjs": "^2.4.3",
     "bootstrap": "^5.3.3",
     "json-server": "^1.0.0-alpha.23",
-    "mysql2": "^3.10.0",
+    "mysql2": "^2.3.3",
     "next": "14.2.3",
     "next-auth": "^4.24.7",
     "next-connect": "^1.0.0",
