@@ -556,7 +556,7 @@ export default Home;
 
 export async function getServerSideProps() {
 	const END_POINT =
-		process.env.NEXT_PUBLIC_NEXT_API_URL || "https://washmanapp.vercel.app/";
+		process.env.NEXT_PUBLIC_NEXT_API_URL || "https://washmanapp.vercel.app/api";
 	try {
 		const response = await axios.get(`${END_POINT}/services`);
 		const data = response.data;
