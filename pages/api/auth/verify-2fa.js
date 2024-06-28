@@ -1,49 +1,35 @@
-// Verify 2fa
 import User from "@/models/User";
-import dbConnect from "@/utils/db"; // Ensure Mongoose is connected
+import dbConnect from "@/utils/db";
 import { getServerSession } from "next-auth/next";
-import { authOptions } from "./[...nextauth]"; // Adjust the path to your nextauth.js file
-import { encode } from "next-auth/jwt"; // Ensure next-auth JWT utilities are imported
+import { authOptions } from "./[...nextauth]";
+import { encode } from "next-auth/jwt";
 
 export default async function handler(req, res) {
 	if (req.method === "POST") {
 		const { email, twoFactorToken } = req.body;
-
 		try {
-			await dbConnect(); // Ensure the database is connected
-			const user = await User.findOne({ email });
-
+			await dbConnect();
+			const user = await User.findOneAndUpdate(
+				{ email, twoFactorToken, twoFactorExpires: { $gt: new Date() } },
+				{ $set: { twoFactorToken: null, twoFactorExpires: null } },
+				{ returnNewDocument: true }
+			);
 			if (!user) {
-				return res.status(400).json({ error: "User not found" });
+				return res
+					.status(400)
+					.json({ error: "User not found or invalid 2FA token" });
 			}
-
-			if (
-				!user.twoFactorToken ||
-				user.twoFactorToken !== twoFactorToken ||
-				user.twoFactorExpires < new Date()
-			) {
-				return res.status(400).json({ error: "Invalid or expired 2FA token" });
-			}
-
-			user.twoFactorToken = null;
-			user.twoFactorExpires = null;
-			await user.save();
-
 			const session = await getServerSession(req, res, authOptions);
-
 			if (session) {
-				// Update the session token
 				const updatedToken = {
 					...session.user,
 					status: "authorized",
 					twoFactorEnabled: false,
 				};
-
 				const encodedToken = await encode({
 					token: updatedToken,
 					secret: process.env.NEXTAUTH_SECRET,
 				});
-
 				res.setHeader(
 					"Set-Cookie",
 					`next-auth.session-token=${encodedToken}; Path=/; HttpOnly; Secure; SameSite=Strict`
