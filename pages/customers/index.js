@@ -83,7 +83,8 @@ function CustomerList({ customers, customerError }) {
 		e.preventDefault();
 
 		// Add logic to handle updating customer data
-		const END_POINT = process.env.NEXT_API_URL;
+		const END_POINT =
+			process.env.NEXT_PUBLIC_NEXT_API_URL || "https://washmanapp.vercel.app/";
 		const response = await fetch(
 			`${END_POINT}/customers/${selectedCustomer.id}`,
 			{
@@ -429,7 +430,8 @@ function CustomerList({ customers, customerError }) {
 export default CustomerList;
 
 export async function getServerSideProps(context) {
-	const END_POINT = process.env.NEXT_API_URL;
+	const END_POINT =
+		process.env.NEXT_PUBLIC_NEXT_API_URL || "https://washmanapp.vercel.app/";
 	try {
 		const session = await getSession(context);
 		const email = session?.user?.email;

@@ -367,7 +367,7 @@ function UserList({ users }) {
 export default UserList;
 
 export async function getServerSideProps() {
-	let api = process.env.NEXT_API_URL;
+	let api = process.env.NEXT_PUBLIC_NEXT_API_URL;
 
 	const response = await fetch(`${api}/users`);
 	const data = await response.json();

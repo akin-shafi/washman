@@ -140,7 +140,8 @@ export async function getServerSideProps(context) {
 		};
 	}
 
-	const END_POINT = process.env.NEXT_API_URL;
+	const END_POINT =
+		process.env.NEXT_PUBLIC_NEXT_API_URL || "https://washmanapp.vercel.app/";
 	const response = await fetch(`${END_POINT}/schedules`);
 	const data = await response.json();
 	return {

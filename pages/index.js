@@ -33,7 +33,7 @@ const Home = ({ services, error }) => {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		const API = process.env.NEXT_API_URL;
+		const API = process.env.NEXT_PUBLIC_NEXT_API_URL;
 		try {
 			const response = await fetch(`${API}/services`, {
 				method: "POST",
@@ -555,7 +555,8 @@ const Home = ({ services, error }) => {
 export default Home;
 
 export async function getServerSideProps() {
-	const END_POINT = process.env.NEXT_API_URL;
+	const END_POINT =
+		process.env.NEXT_PUBLIC_NEXT_API_URL || "https://washmanapp.vercel.app/";
 	try {
 		const response = await axios.get(`${END_POINT}/services`);
 		const data = response.data;

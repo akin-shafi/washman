@@ -349,7 +349,8 @@ import { getSession } from "next-auth/react";
 
 export async function getServerSideProps(context) {
 	const session = await getSession(context);
-	const END_POINT = process.env.NEXT_API_URL;
+	const END_POINT =
+		process.env.NEXT_PUBLIC_NEXT_API_URL || "https://washmanapp.vercel.app/";
 	const email = session?.user?.email;
 	if (!session || session.user.status === "2FA") {
 		return {

@@ -58,7 +58,7 @@ function UserList({ services }) {
 	const handleUpdateUser = async (e) => {
 		e.preventDefault();
 		// Add logic to handle updating user data
-		const api = NEXT_API_URL;
+		const api = NEXT_PUBLIC_NEXT_API_URL;
 		const response = await fetch(`${api}/services/${selectedUser.id}`, {
 			method: "PUT",
 			headers: {
@@ -334,7 +334,8 @@ function UserList({ services }) {
 export default UserList;
 
 export async function getServerSideProps() {
-	const END_POINT = process.env.NEXT_API_URL;
+	const END_POINT =
+		process.env.NEXT_PUBLIC_NEXT_API_URL || "https://washmanapp.vercel.app/api";
 
 	const response = await fetch(`${END_POINT}/services`);
 	const data = await response.json();
