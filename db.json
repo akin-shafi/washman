@@ -1,0 +1,259 @@
+{
+    "services":[
+      {
+        "id": 1,
+        "heading":"Washing",
+        "text": "Refresh your wardrobe with our expert laundering service, leaving them fresh and clean, ready to wear.",
+        "file": "1.png"
+      },
+      {
+        "id": 2,
+        "heading":"Ironing",
+        "text": "Say goodbye to wrinkles! Our expert ironing service will leave your wears  pressed and ready to impress.",
+        "file": "2.png"
+      },
+      {
+        "id": 3,
+        "heading":"Starching",
+        "text": "Add that extra touch of elegance to your clothes with our premium starching service.",
+        "file": "3.png"
+      },
+      {
+        "id": 4,
+        "heading":"Premium Packaging",
+        "text": " We'll package your wears with care and style, ready for your collection or delivery.",
+        "file": "4.png"
+      },
+      {
+        "id": 5,
+        "heading":"Stubborn stain removal",
+        "text": " No stain is too tough for us to tackle. Trust our skilled team to banish even the most stubborn marks.",
+        "file": "5.png"
+      },
+      {
+        "id": 6,
+        "heading":"Door Step Delivery",
+        "text": "Enjoy convenience at your doorstep as we bring our top-notch service directly to you, making laundry day a breeze.",
+        "file": "6.png"
+      }
+    ],
+    "users":[
+      {
+        "id": "1",
+        "first_name": "Admin",
+        "last_name": "One",
+        "email": "admin1@example.com",
+        "phone": "081211223345",
+        "password": "Admin1@123"
+      },
+      {
+        "id": "2",
+        "first_name": "Admin",
+        "last_name": "Two",
+        "email": "admin2@example.com",
+        "phone": "08123456789",
+        "password": "Admin2@123"
+      }
+    ],
+    "customers":[
+      {
+        "id": "1",
+        "first_name": "Muhammad",
+        "last_name": "Buhari",
+        "email": "muhammad.buhari@example.com",
+        "phone": "08123456789",
+        "address": "1, Garki Aso rock, Abuja, Nigeria"
+      },
+      {
+        "id": "2",
+        "first_name": "Chidinma",
+        "last_name": "Okonkwo",
+        "email": "chidinma.okonkwo@example.com",
+        "phone": "08123456789",
+        "address": "22, XYZ Avenue, Lagos, Nigeria"
+      },
+      {
+        "id": "3",
+        "first_name": "Mohammed",
+        "last_name": "Ali",
+        "email": "mohammed.ali@example.com",
+        "phone": "09087654321",
+        "address": "33, Main Street, Cairo, Egypt"
+      },
+      {
+        "id": "4",
+        "first_name": "Emma",
+        "last_name": "Smith",
+        "email": "emma.smith@example.com",
+        "phone": "07123456789",
+        "address": "44, Elm Street, New York, USA"
+      },
+      {
+        "id": "5",
+        "first_name": "Sara",
+        "last_name": "Johnson",
+        "email": "sara.johnson@example.com",
+        "phone": "07098765432",
+        "address": "55, Maple Avenue, Toronto, Canada"
+      },
+      {
+        "id": "6",
+        "first_name": "Juan",
+        "last_name": "Martinez",
+        "email": "juan.martinez@example.com",
+        "phone": "09123456789",
+        "address": "66, Oak Street, Madrid, Spain"
+      },
+      {
+        "id": "7",
+        "first_name": "Yuki",
+        "last_name": "Tanaka",
+        "email": "yuki.tanaka@example.com",
+        "phone": "08012345678",
+        "address": "77, Sakura Avenue, Tokyo, Japan"
+      },
+      {
+        "id": "8",
+        "first_name": "Sophie",
+        "last_name": "Lefèvre",
+        "email": "sophie.lefevre@example.com",
+        "phone": "06123456789",
+        "address": "88, Rue des Fleurs, Paris, France"
+      },
+      {
+        "id": "9",
+        "first_name": "Alexander",
+        "last_name": "Ivanov",
+        "email": "alexander.ivanov@example.com",
+        "phone": "07012345678",
+        "address": "99, Red Square, Moscow, Russia"
+      },
+      {
+        "id": "10",
+        "first_name": "Lily",
+        "last_name": "Wong",
+        "email": "lily.wong@example.com",
+        "phone": "09876543210",
+        "address": "1010, Lotus Lane, Beijing, China"
+      },
+      {
+        "id": "11",
+        "first_name": "Diego",
+        "last_name": "Fernandez",
+        "email": "diego.fernandez@example.com",
+        "phone": "09123456789",
+        "address": "1111, Calle Principal, Buenos Aires, Argentina"
+      },
+      {
+        "id": "12",
+        "first_name": "Anna",
+        "last_name": "Kowalska",
+        "email": "anna.kowalska@example.com",
+        "phone": "07098765432",
+        "address": "1212, Polna Ulica, Warsaw, Poland"
+      }
+        
+    ],
+    "messages":[
+        {
+          "id":"1",
+          "name":"Shafi Adamu",
+          "email":"ades@email.com",
+          "phone": "08084758903",
+          "subject": "Enquiry",
+          "body": "When can i come for pickup"
+        },
+        {
+          "id": "2",
+          "name": "Confidence Igwe",
+          "email": "article2@example.com",
+          "phone": "09012345678",
+          "subject": "Feedback",
+          "body": "I really enjoyed reading this article. Thank you!"
+        },
+        {
+          "id": "3",
+          "name": "Juzi Major",
+          "email": "article3@example.com",
+          "phone": "07098765432",
+          "subject": "Question",
+          "body": "Can you provide more information about the research methodology used?"
+        },
+        {
+          "id": "4",
+          "name": "Ibomoere Olumofa",
+          "email": "article4@example.com",
+          "phone": "08087654321",
+          "subject": "Collaboration Opportunity",
+          "body": "I am interested in collaborating on future projects. Please let me know how we can proceed."
+        },
+        {
+          "id": "5",
+          "name": "Fikayo Fuahd",
+          "email": "article5@example.com",
+          "phone": "08123456789",
+          "subject": "Correction",
+          "body": "There is a factual error in paragraph three. Could you please correct it?"
+        },
+        {
+          "id": "6",
+          "name": "Afolabi Legunshen",
+          "email": "apho@example.com",
+          "phone": "08123456789",
+          "subject": "Correction",
+          "body": "There is a factual error in paragraph three. Could you please correct it?"
+        }
+        
+        
+    ],
+    "schedules":[
+      {
+        "id": "2",
+        "name": "Chinwe Okafor",
+        "phone": "09087654321",
+        "address": "15, Johnson Avenue",
+        "pickup_date": "25/12/2024",
+        "delivery_date": "25/12/2024"
+      },
+      {
+        "id": "3",
+        "name": "Emeka Okonkwo",
+        "phone": "08123456789",
+        "address": "22, Ikeja Road",
+        "pickup_date": "03/01/2025",
+        "delivery_date": "03/01/2025"
+      },
+      {
+        "id": "4",
+        "name": "Fatima Abdullahi",
+        "phone": "08098765432",
+        "address": "7, Kano Crescent",
+        "pickup_date": "10/01/2025",
+        "delivery_date": "10/01/2025"
+      },
+      {
+        "id": "5",
+        "name": "David Johnson",
+        "phone": "08012345678",
+        "address": "33, Liberty Street",
+        "pickup_date": "17/01/2025",
+        "delivery_date": "17/01/2025"
+      },
+      {
+        "id": "6",
+        "name": "Sophia Li",
+        "phone": "07012345678",
+        "address": "88, Zhongshan Road",
+        "pickup_date": "24/01/2025",
+        "delivery_date": "24/01/2025"
+      },
+      {
+        "id": "7",
+        "name": "Carlos Gomez",
+        "phone": "09123456789",
+        "address": "55, Avenida del Sol",
+        "pickup_date": "31/01/2025",
+        "delivery_date": "31/01/2025"
+      }
+    ]
+}
