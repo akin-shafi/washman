@@ -594,7 +594,7 @@ export async function getServerSideProps() {
 			errorMessage += ` Server responded with ${error.response.status} ${error.response.statusText}`;
 		} else if (error.request) {
 			// The request was made but no response was received
-			errorMessage += " No response received from the server";
+			errorMessage += ` No response received from the server ${error.request} - ${response}`;
 		} else {
 			// Something happened in setting up the request that triggered an Error
 			errorMessage += ` Error setting up request: ${error.message}`;
