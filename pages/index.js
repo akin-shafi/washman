@@ -3,7 +3,7 @@ import Header from "../components/header";
 import axios from "axios";
 import { Modal, Form } from "react-bootstrap";
 // export default function Home({ servicesRecord }) {
-const Home = ({ services, error }) => {
+const Home = ({ services, error, endpoint }) => {
 	const [modalIsOpen, setModalIsOpen] = useState(false);
 	const [formData, setFormData] = useState({
 		name: "",
@@ -255,7 +255,7 @@ const Home = ({ services, error }) => {
 						<div className="row">
 							<div className="col-xl-12">
 								<div className="section-title text-center mb-3">
-									<h2 className="text-white">Our Services</h2>
+									<h2 className="text-white">Our Services - {endpoint}</h2>
 								</div>
 							</div>
 						</div>
@@ -562,6 +562,7 @@ export async function getServerSideProps() {
 		const data = response.data;
 		return {
 			props: {
+				endpoint: END_POINT,
 				services: data,
 				error: null,
 			},
@@ -582,6 +583,7 @@ export async function getServerSideProps() {
 		}
 		return {
 			props: {
+				endpoint: END_POINT,
 				services: [],
 				error: errorMessage,
 			},
