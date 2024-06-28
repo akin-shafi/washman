@@ -25,6 +25,6 @@ const serviceSchema = new Schema(
 );
 
 // Create a model based on the schema
-const Service = mongoose.model("Service", serviceSchema);
+const Service = mongoose.models.Service || mongoose.model("Service", serviceSchema);
 
 export default Service;
