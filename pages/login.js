@@ -11,8 +11,8 @@ function SignIn() {
 	const { data: session, status: sessionStatus } = useSession();
 	const searchParams = useSearchParams();
 	const sessionMessage = searchParams.get("message");
-	const [email, setEmail] = useState("sakinropo@gmail.com");
-	const [password, setPassword] = useState("User@123");
+	const [email, setEmail] = useState("");
+	const [password, setPassword] = useState("");
 	const [error, setError] = useState("");
 	const [loading, setLoading] = useState(false); // State to manage loading state of the button
 
@@ -30,7 +30,7 @@ function SignIn() {
 			setError("Invalid email or password");
 		} else {
 			setError("");
-			if (session?.user?.status === "2FA") {
+			if (session?.user?.twoFactorEnabled == true) {
 				router.push({
 					pathname: "/verification",
 					query: { email },
