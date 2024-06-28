@@ -586,7 +586,7 @@ export async function getServerSideProps() {
 			},
 		};
 	} catch (error) {
-		console.error("Error fetching data:", error);
+		console.error("Error fetching data see:", error);
 		let errorMessage = `Error fetching data from the database.`;
 		if (error.response) {
 			// The request was made and the server responded with a status code
