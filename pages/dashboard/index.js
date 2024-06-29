@@ -100,13 +100,13 @@ function Dashboard({
 		},
 		buttonNext: {
 			backgroundColor: "#fdd05c", // Customize this color to your preferred button color
-			color: "#000000", // Customize text color
+			color: "#000", // Customize text color
 		},
 		buttonBack: {
-			color: "#000000", // Customize this color to your preferred button color
+			color: "#000", // Customize this color to your preferred button color
 		},
 		buttonSkip: {
-			color: "#000000", // Customize this color to your preferred button color
+			color: "#000", // Customize this color to your preferred button color
 		},
 	};
 
