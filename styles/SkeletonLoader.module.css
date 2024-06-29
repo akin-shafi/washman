@@ -1,0 +1,43 @@
+/* components/SkeletonLoader.module.css */
+.skeletonWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.skeletonItem {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: #e0e0e0;
+    border-radius: 4px;
+    animation: pulse 1.5s infinite ease-in-out;
+}
+
+.skeletonText {
+    width: 30%;
+    height: 20px;
+    background-color: #c0c0c0;
+    border-radius: 4px;
+}
+
+.skeletonAction {
+    width: 10%;
+    height: 20px;
+    background-color: #c0c0c0;
+    border-radius: 4px;
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}

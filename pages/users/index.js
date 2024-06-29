@@ -2,12 +2,14 @@ import { useState, useEffect } from "react";
 import Menu from "../../components/Menu";
 import Link from "next/link";
 import { Modal, Form } from "react-bootstrap";
+import SkeletonLoader from "../../components/SkeletonLoader"; // Import SkeletonLoader
 
 function UserList({ users }) {
 	const [currentPage, setCurrentPage] = useState(1);
 	const [usersPerPage] = useState(5);
 	const [search, setSearch] = useState("");
 	const [filteredUsers, setFilteredUsers] = useState([]);
+	const [isLoading, setIsLoading] = useState(true); // Add loading state
 	const [isModalOpen, setModalOpen] = useState(false);
 	const [showModal, setShowModal] = useState(false);
 	const [selectedUser, setSelectedUser] = useState(null);
@@ -24,6 +26,7 @@ function UserList({ users }) {
 						user.email.toLowerCase().includes(search.toLowerCase())
 				)
 			);
+			setIsLoading(false); // Set loading to false when data is loaded
 		}
 	}, [search, users]);
 
@@ -183,39 +186,43 @@ function UserList({ users }) {
 									</div>
 								</div>
 								<div className="table-responsive p-4">
-									<table className="table">
-										<thead>
-											<tr>
-												<th>SN</th>
-												<th>Name</th>
-												<th>Email</th>
-												<th>Action</th>
-											</tr>
-										</thead>
-										<tbody>
-											{currentUsers.map((user, index) => (
-												<tr key={user._id}>
-													<td>{indexOfFirstUser + index + 1}</td>
-													<td>{user.name}</td>
-													<td>{user.email}</td>
-													<td>
-														<div className="btn-group">
-															<button
-																className="btn btn-sm btn-outline-warning"
-																onClick={() => handleEditUser(user)}>
-																<i className="ti ti-edit"></i>
-															</button>
-															<button
-																className="btn btn-sm btn-danger ml-2"
-																onClick={() => handleDeleteUser(user._id)}>
-																<i className="ti ti-trash"></i>
-															</button>
-														</div>
-													</td>
+									{isLoading ? (
+										<SkeletonLoader />
+									) : (
+										<table className="table">
+											<thead>
+												<tr>
+													<th>SN</th>
+													<th>Name</th>
+													<th>Email</th>
+													<th>Action</th>
 												</tr>
-											))}
-										</tbody>
-									</table>
+											</thead>
+											<tbody>
+												{currentUsers.map((user, index) => (
+													<tr key={user._id}>
+														<td>{indexOfFirstUser + index + 1}</td>
+														<td>{user.name}</td>
+														<td>{user.email}</td>
+														<td>
+															<div className="btn-group">
+																<button
+																	className="btn btn-sm btn-outline-warning"
+																	onClick={() => handleEditUser(user)}>
+																	<i className="ti ti-edit"></i>
+																</button>
+																<button
+																	className="btn btn-sm btn-danger ml-2"
+																	onClick={() => handleDeleteUser(user._id)}>
+																	<i className="ti ti-trash"></i>
+																</button>
+															</div>
+														</td>
+													</tr>
+												))}
+											</tbody>
+										</table>
+									)}
 								</div>
 
 								<nav className="p-3 d-flex justify-content-center">
