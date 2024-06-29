@@ -8,9 +8,7 @@ import mongoose from "mongoose";
 
 // Ensure mongoose connection is established
 if (!mongoose.connection.readyState) {
-	mongoose.connect(process.env.MONGODB_URI, {
-		useUnifiedTopology: true,
-	});
+	mongoose.connect(process.env.MONGODB_URI);
 }
 
 export const authOptions = {

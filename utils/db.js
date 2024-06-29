@@ -25,7 +25,6 @@ async function dbConnect() {
 
 	if (!cached.promise) {
 		const opts = {
-			useUnifiedTopology: true,
 			bufferCommands: false,
 		};
 

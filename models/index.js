@@ -13,9 +13,7 @@ dotenv.config();
 const dbUrl = process.env.MONGODB_URI;
 
 // Connect to MongoDB using Mongoose
-mongoose.connect(dbUrl, {
-	useUnifiedTopology: true,
-});
+mongoose.connect(dbUrl);
 
 // Access the default connection to MongoDB
 const db = mongoose.connection;
