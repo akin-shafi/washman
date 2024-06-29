@@ -82,7 +82,7 @@ const SignupPage = () => {
 		}
 
 		setLoading(true); // Start loading
-
+		const emailLowerCase = email.toLowerCase();
 		try {
 			const res = await fetch("/api/users", {
 				method: "POST",
@@ -91,7 +91,7 @@ const SignupPage = () => {
 				},
 				body: JSON.stringify({
 					name,
-					email,
+					emailLowerCase,
 					password,
 					image,
 				}),

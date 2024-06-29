@@ -20,9 +20,12 @@ function SignIn() {
 		e.preventDefault();
 		setLoading(true); // Start loading
 
+		e.preventDefault();
+		setLoading(true); // Start loading
+		const emailLowerCase = email.toLowerCase(); // Convert email to lowercase
 		const res = await signIn("credentials", {
 			redirect: false,
-			email,
+			email: emailLowerCase,
 			password,
 		});
 
