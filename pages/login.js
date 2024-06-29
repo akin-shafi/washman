@@ -50,7 +50,7 @@ function SignIn() {
 		<section className="py-3 py-md-5">
 			<div className="container">
 				<div className="row justify-content-center">
-					<div className="col-12 col-sm-10 col-md-8 col-lg-7 col-xl-7 col-xxl-6">
+					<div className="col-12 col-sm-10 col-md-8 col-lg-7 col-xl-6 col-xxl-6">
 						<div className="rounded-3 shadow-sm">
 							<div className="card-body p-1">
 								<div className="text-center mb-3">

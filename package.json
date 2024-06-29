@@ -27,11 +27,13 @@
     "react": "18.3.1",
     "react-bootstrap": "^2.10.2",
     "react-dom": "18.3.1",
+    "react-joyride": "^2.8.2",
     "react-loading-skeleton": "^3.4.0",
     "react-modal": "^3.16.1",
     "server": "^1.0.39",
     "sharp": "^0.33.4",
-    "speakeasy": "^2.0.0"
+    "speakeasy": "^2.0.0",
+    "styled-components": "^6.1.11"
   },
   "devDependencies": {
     "@aws-amplify/backend": "^1.0.3",

@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { signIn, useSession } from "next-auth/react";
 import withAuth from "@/hoc/withAuth";
-
 import Menu from "@/components/Menu";
 import Link from "next/link";
 import { Modal } from "react-bootstrap";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
+import Joyride from "react-joyride";
 
 function Dashboard({
 	customers,
@@ -62,7 +64,7 @@ function Dashboard({
 	}, [loading, session]);
 
 	if (loading) {
-		return <h2>Loading...</h2>;
+		return <Skeleton count={10} />;
 	}
 
 	if (!session) {
@@ -71,8 +73,67 @@ function Dashboard({
 
 	const isLoggedIn = session && session.user;
 
+	const joyrideSteps = [
+		{
+			target: ".welcome-text",
+			content:
+				"Welcome to the Dashboard! Here you can manage your customers, schedules, and messages.",
+			disableBeacon: true,
+		},
+		{
+			target: ".add-customer-btn",
+			content: "Click here to add a new customer.",
+		},
+		{
+			target: ".view-all-schedules-link",
+			content: "View all schedules to manage pickups and deliveries.",
+		},
+		{
+			target: ".view-all-messages-link",
+			content: "Explore all messages from customers and staff.",
+		},
+	];
+
+	const [joyrideOpen, setJoyrideOpen] = useState(false);
+
+	const handleJoyrideCallback = (data) => {
+		const { action, index, type, status } = data;
+		const finishedStatuses = ["finished", "skipped"];
+
+		if (finishedStatuses.includes(status)) {
+			setJoyrideOpen(false);
+			// Store that the user has completed the tour
+			localStorage.setItem("hasCompletedTour", "true");
+		}
+
+		if (action === "reset" || action === "close") {
+			setJoyrideOpen(false);
+		}
+	};
+
+	const startJoyride = () => {
+		setJoyrideOpen(true);
+	};
+
+	useEffect(() => {
+		// Check if the user has completed the tour
+		const hasCompletedTour = localStorage.getItem("hasCompletedTour");
+		if (!hasCompletedTour) {
+			startJoyride();
+		}
+	}, []); // Empty dependency array ensures this effect runs only once on mount
+
 	return (
 		<>
+			<Joyride
+				steps={joyrideSteps}
+				run={joyrideOpen}
+				continuous={true}
+				showProgress={true}
+				showSkipButton={true}
+				callback={handleJoyrideCallback}
+			/>
+
 			<Modal
 				className="text-white"
 				size=""
@@ -154,13 +215,16 @@ function Dashboard({
 				</Modal.Body>
 			</Modal>
 
+			{/* Dashboard content */}
 			<div className="page-wrapper toggled">
 				<Menu />
 				<main className="page-content ">
 					<div className="container-fluid">
+						{/* Content sections */}
+						{/* Welcome message */}
 						<div className="layout-specing">
 							<div className="card">
-								<h5 className="mb-0 text-white p-4">
+								<h5 className="welcome-text mb-0 text-white p-4">
 									{isLoggedIn ? (
 										<p>Welcome {session.user.name}</p>
 									) : (
@@ -168,7 +232,10 @@ function Dashboard({
 									)}
 								</h5>
 							</div>
+
+							{/* Customer section */}
 							<div className="row">
+								{/* Add customer button */}
 								<div className="col-lg-5 mt-4">
 									<div className="card border-0 rounded shadow p-4">
 										<h5 className="mb-0 mb-3 text-white">
@@ -187,12 +254,13 @@ function Dashboard({
 													className="img-fluid"
 													width={100}
 												/>
+												{/* Placeholder */}
 												<div className="h6 py-1">
 													No recently added Customers
 												</div>
 												<div className="py-1">
 													<button
-														className="btn btn-lg btn-brand"
+														className="add-customer-btn btn btn-lg btn-brand"
 														onClick={handleOpenModal}>
 														<i className="ti ti-plus me-2"></i> Add Customer
 													</button>
@@ -206,13 +274,15 @@ function Dashboard({
 										)}
 									</div>
 								</div>
+
+								{/* Schedule section */}
 								<div className="col-lg-7 mt-4">
 									<div className="card border-0 rounded shadow p-4">
 										<div className="d-flex justify-content-between">
 											<h5 className="mb-0 mb-3 text-white">
 												Schedules Pickup - ({schedules.length})
 											</h5>
-											<div>
+											<div className="view-all-schedules-link">
 												<Link
 													href="/schedules/"
 													className="link-brand">
@@ -233,6 +303,7 @@ function Dashboard({
 															className="img-fluid"
 															width={100}
 														/>
+														{/* Placeholder */}
 														<div className="h6">No activity to report now</div>
 													</div>
 												) : (
@@ -270,13 +341,14 @@ function Dashboard({
 										)}
 									</div>
 								</div>
+								{/* Messages section */}
 								<div className="col-12 mt-4">
 									<div className="card border-0 rounded shadow p-4">
 										<div className="d-flex justify-content-between">
 											<h5 className="mb-0 mb-3 text-white">
 												Messages ({messages.length})
 											</h5>
-											<div>
+											<div className="view-all-messages-link">
 												<Link
 													href="/messages/"
 													className="link-brand">
