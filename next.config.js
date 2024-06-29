@@ -1,8 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
 	reactStrictMode: true,
-	assetPrefix: 'https://washman.onrender.com',
-  	publicRuntimeConfig: {BASE_URL: ' https://washman.onrender.com',},
+	assetPrefix: "https://washman.onrender.com",
+	publicRuntimeConfig: {
+		BASE_URL: "https://washman.onrender.com",
+	},
 	images: {
 		remotePatterns: [
 			{
@@ -11,6 +13,9 @@ const nextConfig = {
 				// pathname: '/**', // You can specify a more specific path if needed
 			},
 		],
+		// Optionally specify the loader and path for custom optimization
+		loader: "default",
+		path: "/public/images",
 	},
 	experimental: {
 		largePageDataBytes: 128 * 100000,
