@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
-import Menu from "@/components/Menu";
+import Menu from "../../components/Menu";
 import Link from "next/link";
 import { Modal, Button, Form } from "react-bootstrap";
 import { getSession } from "next-auth/react";
-import SkeletonLoader from "@/components/SkeletonLoader"; // Import SkeletonLoader
 
 function CustomerList({ customers, customerError }) {
 	const [currentPage, setCurrentPage] = useState(1);
@@ -202,58 +201,52 @@ function CustomerList({ customers, customerError }) {
 								) : (
 									// Render the component content
 									<div className="table-responsive p-4">
-										{isLoading ? (
-											<SkeletonLoader />
-										) : (
-											<table className="table">
-												<thead>
-													<tr>
-														<th>SN</th>
-														<th>Name</th>
-														<th>Email</th>
-														<th>Phone</th>
-														<th>Address</th>
-														<th>Action</th>
+										<table className="table">
+											<thead>
+												<tr>
+													<th>SN</th>
+													<th>Name</th>
+													<th>Email</th>
+													<th>Phone</th>
+													<th>Address</th>
+													<th>Action</th>
+												</tr>
+											</thead>
+											<tbody>
+												{currentCustomers.map((customer, index) => (
+													<tr key={index}>
+														<td>{indexOfFirstCustomer + index + 1}</td>
+														<td>
+															<Link
+																className="link-brand"
+																href={`customers/${customer.id}`}
+																passHref>
+																{customer.firstName} {customer.lastName}
+															</Link>
+														</td>
+														<td>{customer.email}</td>
+														<td>{customer.phone}</td>
+														<td>{customer.address}</td>
+														<td>
+															<div className="btn-group">
+																<button
+																	className="btn btn-sm btn-outline-warning"
+																	onClick={() => handleEditCustomer(customer)}>
+																	<i className="ti ti-edit"></i>
+																</button>
+																<button
+																	className="btn btn-sm btn-dark ml-2"
+																	onClick={() =>
+																		handleDeleteCustomer(customer.id)
+																	}>
+																	<i className="ti ti-trash"></i>
+																</button>
+															</div>
+														</td>
 													</tr>
-												</thead>
-												<tbody>
-													{currentCustomers.map((customer, index) => (
-														<tr key={index}>
-															<td>{indexOfFirstCustomer + index + 1}</td>
-															<td>
-																<Link
-																	className="link-brand"
-																	href={`customers/${customer.id}`}
-																	passHref>
-																	{customer.firstName} {customer.lastName}
-																</Link>
-															</td>
-															<td>{customer.email}</td>
-															<td>{customer.phone}</td>
-															<td>{customer.address}</td>
-															<td>
-																<div className="btn-group">
-																	<button
-																		className="btn btn-sm btn-outline-warning"
-																		onClick={() =>
-																			handleEditCustomer(customer)
-																		}>
-																		<i className="ti ti-edit"></i>
-																	</button>
-																	<button
-																		className="btn btn-sm btn-dark ml-2"
-																		onClick={() =>
-																			handleDeleteCustomer(customer.id)
-																		}>
-																		<i className="ti ti-trash"></i>
-																	</button>
-																</div>
-															</td>
-														</tr>
-													))}
-												</tbody>
-											</table>
-										)}
+												))}
+											</tbody>
+										</table>
 									</div>
 								)}
 
