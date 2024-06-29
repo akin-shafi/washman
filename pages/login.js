@@ -11,8 +11,8 @@ function SignIn() {
 	const { data: session, status: sessionStatus } = useSession();
 	const searchParams = useSearchParams();
 	const sessionMessage = searchParams.get("message");
-	const [email, setEmail] = useState("sakinropo@gmail.com");
-	const [password, setPassword] = useState("Admin@123");
+	const [email, setEmail] = useState("");
+	const [password, setPassword] = useState("");
 	const [error, setError] = useState("");
 	const [loading, setLoading] = useState(false); // State to manage loading state of the button
 
