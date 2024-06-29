@@ -1,6 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
 	reactStrictMode: true,
+	assetPrefix: 'https://washman.onrender.com',
+  	publicRuntimeConfig: {BASE_URL: ' https://washman.onrender.com',},
 	images: {
 		remotePatterns: [
 			{
