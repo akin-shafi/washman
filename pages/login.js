@@ -11,30 +11,36 @@ function SignIn() {
 	const { data: session, status: sessionStatus } = useSession();
 	const searchParams = useSearchParams();
 	const sessionMessage = searchParams.get("message");
-	const [email, setEmail] = useState("");
-	const [password, setPassword] = useState("");
+	const [email, setEmail] = useState("sakinropo@gmail.com");
+	const [password, setPassword] = useState("Admin@123");
 	const [error, setError] = useState("");
 	const [loading, setLoading] = useState(false); // State to manage loading state of the button
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		setLoading(true);
+		setLoading(true); // Start loading
+
 		const res = await signIn("credentials", {
 			redirect: false,
 			email,
 			password,
 		});
+
 		if (res.error) {
 			setError("Invalid email or password");
 		} else {
 			setError("");
-			if (session.user?.twoFactorEnabled === true) {
-				router.push({ pathname: "/verification", query: { email } });
+			if (session?.user?.twoFactorEnabled === "2FA") {
+				router.push({
+					pathname: "/verification",
+					query: { email },
+				});
 			} else {
 				router.push("/dashboard");
 			}
 		}
-		setLoading(false);
+
+		setLoading(false); // Stop loading regardless of success or failure
 	};
 
 	return (

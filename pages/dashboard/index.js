@@ -353,14 +353,14 @@ export async function getServerSideProps(context) {
 		process.env.NEXT_PUBLIC_NEXT_API_URL || "https://washmanapp.vercel.app/api";
 	const email = session?.user?.email;
 	console.log("Show Email:", email);
-	// if (!session || session.user.twoFactorEnabled == true) {
-	// 	return {
-	// 		redirect: {
-	// 			destination: `${process.env.VERIFY_URL}?email=${email}`, //redirect to login page
-	// 			permanent: false,
-	// 		},
-	// 	};
-	// }
+	if (!session || session.user.status == '2FA') {
+		return {
+			redirect: {
+				destination: `${process.env.VERIFY_URL}?email=${email}`, //redirect to login page
+				permanent: false,
+			},
+		};
+	}
 
 	try {
 		// Fetch customers data

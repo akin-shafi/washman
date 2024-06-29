@@ -46,10 +46,10 @@ export const authOptions = {
 						throw new Error("Incorrect password");
 					}
 
-					console.log("twoFactorEnabled Checker:", user.twoFactorEnabled);
+					// console.log("twoFactorEnabled Checker:", user.twoFactorEnabled);
 					if (user.twoFactorEnabled == true) {
 						await generateAndSendTwoFactorToken(user);
-						console.log("Two-factor token generated and sent");
+						// console.log("Two-factor token generated and sent");
 						return {
 							id: user._id,
 							email: user.email,
@@ -59,9 +59,9 @@ export const authOptions = {
 						};
 					}
 
-					console.log(
-						"User authenticated successfully without two-factor authentication"
-					);
+					// console.log(
+					// 	"User authenticated successfully without two-factor authentication"
+					// );
 					return {
 						id: user._id,
 						email: user.email,

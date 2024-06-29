@@ -435,7 +435,7 @@ export async function getServerSideProps(context) {
 	try {
 		const session = await getSession(context);
 		const email = session?.user?.email;
-		if (!session || session.user.twoFactorEnabled == true) {
+		if (!session || session.user.status == "2FA") {
 			return {
 				redirect: {
 					destination: `${process.env.VERIFY_URL}?email=${email}`, //redirect to login page
