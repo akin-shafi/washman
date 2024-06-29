@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import Menu from "../../components/Menu";
+import Menu from "@/components/Menu";
 import Link from "next/link";
 import { getSession } from "next-auth/react";
 import { useRouter } from "next/router";

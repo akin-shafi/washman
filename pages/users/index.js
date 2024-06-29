@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import Menu from "../../components/Menu";
+import Menu from "@/components/Menu";
 import Link from "next/link";
 import { Modal, Form } from "react-bootstrap";
-import SkeletonLoader from "../../components/SkeletonLoader"; // Import SkeletonLoader
+import SkeletonLoader from "@/components/SkeletonLoader"; // Import SkeletonLoader
 
 function UserList({ users }) {
 	const [currentPage, setCurrentPage] = useState(1);

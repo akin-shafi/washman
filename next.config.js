@@ -1,9 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
 	reactStrictMode: true,
-	assetPrefix: "https://washman.onrender.com",
+	assetPrefix: process.env.ASSET_PREFIX || "",
 	publicRuntimeConfig: {
-		BASE_URL: "https://washman.onrender.com",
+		BASE_URL: process.env.BASE_URL || "https://washman.onrender.com",
 	},
 	images: {
 		remotePatterns: [

@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
-import Menu from "../../components/Menu";
+import Menu from "@/components/Menu";
 import Link from "next/link";
 import { Modal, Button, Form } from "react-bootstrap";
 import { getSession } from "next-auth/react";
-import SkeletonLoader from "../../components/SkeletonLoader"; // Import SkeletonLoader
+import SkeletonLoader from "@/components/SkeletonLoader"; // Import SkeletonLoader
 
 function CustomerList({ customers, customerError }) {
 	const [currentPage, setCurrentPage] = useState(1);

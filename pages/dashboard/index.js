@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { signIn, useSession } from "next-auth/react";
 import withAuth from "@/hoc/withAuth";
 
-import Menu from "../../components/Menu";
+import Menu from "@/components/Menu";
 import Link from "next/link";
 import { Modal } from "react-bootstrap";
 
@@ -353,7 +353,7 @@ export async function getServerSideProps(context) {
 		process.env.NEXT_PUBLIC_NEXT_API_URL || "https://washmanapp.vercel.app/api";
 	const email = session?.user?.email;
 	console.log("Show Email:", email);
-	if (!session || session.user.status == '2FA') {
+	if (!session || session.user.status == "2FA") {
 		return {
 			redirect: {
 				destination: `${process.env.VERIFY_URL}?email=${email}`, //redirect to login page

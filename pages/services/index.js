@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import Menu from "../../components/Menu";
-// import TopMenu from "../../components/top-menu";
+import Menu from "@/components/Menu";
+// import TopMenu from "@/components/top-menu";
 import Link from "next/link";
 import { Modal, Button, Form } from "react-bootstrap";
 
