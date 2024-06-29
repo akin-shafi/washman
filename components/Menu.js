@@ -120,13 +120,13 @@ function SideBarMenu() {
 				{/* <!-- Sidebar Footer --> */}
 				<ul className="sidebar-footer sidebar-menu mb-0">
 					<li>
-						<LogoutButton type="footer" />
-						{/* <div
-							onClick={handleSignOut}
+						{/* <LogoutButton type="footer" /> */}
+						<Link
+							href="/profile" 
 							className="pointer">
-							<i className="ti ti-logout me-2 text-muted"></i>
-							<small className="text-muted fw-medium ms-1">Log Out</small>
-						</div> */}
+							{/* <i className="ti ti-logout me-2 text-muted"></i> */}
+							<small className="text-muted fw-medium ms-1">Profile</small>
+						</Link>
 					</li>
 				</ul>
 				{/* <!-- Sidebar Footer --> */}
