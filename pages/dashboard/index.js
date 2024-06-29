@@ -94,6 +94,22 @@ function Dashboard({
 		},
 	];
 
+	const joyrideStyles = {
+		options: {
+			primaryColor: "#FF5733", // Customize this color to your preferred button color
+		},
+		buttonNext: {
+			backgroundColor: "#fdd05c", // Customize this color to your preferred button color
+			color: "#000000", // Customize text color
+		},
+		buttonBack: {
+			color: "#000000", // Customize this color to your preferred button color
+		},
+		buttonSkip: {
+			color: "#000000", // Customize this color to your preferred button color
+		},
+	};
+
 	const [joyrideOpen, setJoyrideOpen] = useState(false);
 
 	const handleJoyrideCallback = (data) => {
@@ -132,6 +148,7 @@ function Dashboard({
 				showProgress={true}
 				showSkipButton={true}
 				callback={handleJoyrideCallback}
+				styles={joyrideStyles} // Pass the custom styles here
 			/>
 
 			<Modal
