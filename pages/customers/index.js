@@ -3,12 +3,15 @@ import Menu from "../../components/Menu";
 import Link from "next/link";
 import { Modal, Button, Form } from "react-bootstrap";
 import { getSession } from "next-auth/react";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 function CustomerList({ customers, customerError }) {
 	const [currentPage, setCurrentPage] = useState(1);
 	const [customersPerPage] = useState(5);
 	const [search, setSearch] = useState("");
 	const [filteredCustomers, setFilteredCustomers] = useState(customers);
+	const [loading, setLoading] = useState(true);
 
 	const [isModalOpen, setModalOpen] = useState(false);
 	const handleOpenModal = () => {
@@ -46,7 +49,6 @@ function CustomerList({ customers, customerError }) {
 				address: customerAddress,
 			}),
 		});
-		// const data = await response.json();
 		if (response.ok) {
 			const updatedCustomers = await fetchUpdatedCustomers();
 			setFilteredCustomers(updatedCustomers);
@@ -82,7 +84,6 @@ function CustomerList({ customers, customerError }) {
 	const handleUpdateCustomer = async (e) => {
 		e.preventDefault();
 
-		// Add logic to handle updating customer data
 		const END_POINT =
 			process.env.NEXT_PUBLIC_NEXT_API_URL || "https://washmanapp.vercel.app/";
 		const response = await fetch(
@@ -114,23 +115,19 @@ function CustomerList({ customers, customerError }) {
 
 	const handleDeleteCustomer = (customerId) => {
 		if (window.confirm("Are you sure you want to delete this customer?")) {
-			// Here, simulate the deletion logic
 			const updatedCustomers = filteredCustomers.filter(
 				(customer) => customer.id !== customerId
 			);
 			setFilteredCustomers(updatedCustomers);
-			// Typically, here you would also send a request to the backend to delete the customer
 			console.log("Customer deleted:", customerId);
 		}
 	};
 
 	useEffect(() => {
-		// Check if customers is an array before setting filteredCustomers
 		if (Array.isArray(customers)) {
 			setFilteredCustomers(
 				customers.filter((customer) => {
-					// Ensure customer object is valid before accessing its properties
-					if (!customer) return false; // Check if customer is undefined or null
+					if (!customer) return false;
 					return (
 						customer.firstName.toLowerCase().includes(search.toLowerCase()) ||
 						customer.lastName.toLowerCase().includes(search.toLowerCase()) ||
@@ -140,21 +137,18 @@ function CustomerList({ customers, customerError }) {
 					);
 				})
 			);
+			setLoading(false);
 		}
 	}, [search, customers]);
 
-	// Get current customers
 	const indexOfLastCustomer = currentPage * customersPerPage;
 	const indexOfFirstCustomer = indexOfLastCustomer - customersPerPage;
-	// Ensure filteredCustomers is an array before calling slice
 	const currentCustomers = Array.isArray(filteredCustomers)
 		? filteredCustomers.slice(indexOfFirstCustomer, indexOfLastCustomer)
 		: [];
 
-	// Change page
 	const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-	// Calculate total pages for pagination
 	const pageNumbers = [];
 	for (
 		let i = 1;
@@ -191,15 +185,19 @@ function CustomerList({ customers, customerError }) {
 											value={search}
 											onChange={(e) => {
 												setSearch(e.target.value);
-												setCurrentPage(1); // Reset to first page on search
+												setCurrentPage(1);
 											}}
 										/>
 									</div>
 								</div>
 								{customerError ? (
 									<div className="alert alert-danger">{customerError}</div>
+								) : loading ? (
+									<Skeleton
+										count={5}
+										height={30}
+									/>
 								) : (
-									// Render the component content
 									<div className="table-responsive p-4">
 										<table className="table">
 											<thead>
@@ -283,143 +281,148 @@ function CustomerList({ customers, customerError }) {
 					<Modal.Title id="main-modal-title">Add new Customer</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
-					<form
-						onSubmit={handleAddCustomer}
-						className="row">
-						<div className="col-6 form-group mb-2">
-							<label className="control-label">First Name:</label>
-							<input
-								className="form-control"
-								type="text"
-								value={firstName}
-								onChange={(e) => setFirstName(e.target.value)}
-								placeholder="Enter name"
-							/>
+					<Form onSubmit={handleAddCustomer}>
+						<div className="row">
+							<div className="col-md-12">
+								<Form.Group controlId="formFirstName">
+									<Form.Label>First Name</Form.Label>
+									<Form.Control
+										type="text"
+										placeholder="Enter first name"
+										value={firstName}
+										onChange={(e) => setFirstName(e.target.value)}
+									/>
+								</Form.Group>
+							</div>
+							<div className="col-md-12">
+								<Form.Group controlId="formLastName">
+									<Form.Label>Last Name</Form.Label>
+									<Form.Control
+										type="text"
+										placeholder="Enter last name"
+										value={lastName}
+										onChange={(e) => setLastName(e.target.value)}
+									/>
+								</Form.Group>
+							</div>
+							<div className="col-md-12">
+								<Form.Group controlId="formCustomerEmail">
+									<Form.Label>Email</Form.Label>
+									<Form.Control
+										type="email"
+										placeholder="Enter email"
+										value={customerEmail}
+										onChange={(e) => setCustomerEmail(e.target.value)}
+									/>
+								</Form.Group>
+							</div>
+							<div className="col-md-12">
+								<Form.Group controlId="formCustomerPhone">
+									<Form.Label>Phone</Form.Label>
+									<Form.Control
+										type="text"
+										placeholder="Enter phone"
+										value={customerPhone}
+										onChange={(e) => setCustomerPhone(e.target.value)}
+									/>
+								</Form.Group>
+							</div>
+							<div className="col-md-12">
+								<Form.Group controlId="formCustomerAddress">
+									<Form.Label>Address</Form.Label>
+									<Form.Control
+										type="text"
+										placeholder="Enter address"
+										value={customerAddress}
+										onChange={(e) => setCustomerAddress(e.target.value)}
+									/>
+								</Form.Group>
+							</div>
 						</div>
-						<div className="col-6 form-group mb-2">
-							<label className="control-label">Last Name:</label>
-							<input
-								className="form-control"
-								type="text"
-								value={lastName}
-								onChange={(e) => setLastName(e.target.value)}
-								placeholder="Enter name"
-							/>
-						</div>
-						<div className="col-6 form-group mb-2">
-							<label className="control-label">Email:</label>
-							<input
-								className="form-control"
-								type="email"
-								value={customerEmail}
-								onChange={(e) => setCustomerEmail(e.target.value)}
-								placeholder="Enter email"
-							/>
-						</div>
-						<div className="col-6 form-group mb-2">
-							<label className="control-label">Phone:</label>
-							<input
-								className="form-control"
-								type="tel"
-								value={customerPhone}
-								onChange={(e) => setCustomerPhone(e.target.value)}
-								placeholder="Enter phone"
-							/>
-						</div>
-						<div className="col-12 form-group mb-2">
-							<label className="control-label">Address:</label>
-							<input
-								className="form-control"
-								type="text"
-								value={customerAddress}
-								onChange={(e) => setCustomerAddress(e.target.value)}
-								placeholder="Enter address"
-							/>
-						</div>
-
-						<div className="mt-2 d-flex justify-content-center">
-							<button
-								type="button"
-								className="btn btn-secondary me-4"
+						<Modal.Footer>
+							<Button
+								variant="secondary"
+								className="text-dark"
 								onClick={handleCloseModal}>
-								cancel
-							</button>
-
-							<button
+								Close
+							</Button>
+							<Button
+								variant="brand"
 								type="submit"
-								className="btn btn-brand ">
-								Add
-							</button>
-						</div>
-					</form>
+								className="btn-brand text-white">
+								Add Customer
+							</Button>
+						</Modal.Footer>
+					</Form>
 				</Modal.Body>
 			</Modal>
-			{/* Edit Customer */}
+
 			<Modal
-				className="text-white"
 				show={showModal}
-				backdrop="static"
-				onHide={() => setShowModal(false)}>
+				onHide={handleCloseEditCustomer}>
 				<Modal.Header closeButton>
 					<Modal.Title>Edit Customer</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
 					<Form onSubmit={handleUpdateCustomer}>
 						<Form.Group controlId="formFirstName">
-							<Form.Label>First Name:</Form.Label>
+							<Form.Label>First Name</Form.Label>
 							<Form.Control
 								type="text"
+								placeholder="Enter first name"
 								value={firstName}
 								onChange={(e) => setFirstName(e.target.value)}
 							/>
 						</Form.Group>
 						<Form.Group controlId="formLastName">
-							<Form.Label>Last Name:</Form.Label>
+							<Form.Label>Last Name</Form.Label>
 							<Form.Control
 								type="text"
+								placeholder="Enter last name"
 								value={lastName}
 								onChange={(e) => setLastName(e.target.value)}
 							/>
 						</Form.Group>
-						<Form.Group controlId="formEmail">
-							<Form.Label>Email:</Form.Label>
+						<Form.Group controlId="formCustomerEmail">
+							<Form.Label>Email</Form.Label>
 							<Form.Control
 								type="email"
+								placeholder="Enter email"
 								value={customerEmail}
 								onChange={(e) => setCustomerEmail(e.target.value)}
 							/>
 						</Form.Group>
-						<Form.Group controlId="formPhone">
-							<Form.Label>Phone:</Form.Label>
+						<Form.Group controlId="formCustomerPhone">
+							<Form.Label>Phone</Form.Label>
 							<Form.Control
-								type="tel"
+								type="text"
+								placeholder="Enter phone"
 								value={customerPhone}
 								onChange={(e) => setCustomerPhone(e.target.value)}
 							/>
 						</Form.Group>
-						<Form.Group controlId="formAddress">
-							<Form.Label>Address:</Form.Label>
+						<Form.Group controlId="formCustomerAddress">
+							<Form.Label>Address</Form.Label>
 							<Form.Control
 								type="text"
+								placeholder="Enter address"
 								value={customerAddress}
 								onChange={(e) => setCustomerAddress(e.target.value)}
 							/>
 						</Form.Group>
-						<div className="mt-4 d-flex justify-content-center">
-							<button
-								type="button"
-								variant="primary"
-								className="btn btn-secondary  me-3"
+						<Modal.Footer>
+							<Button
+								variant="secondary"
+								className="text-dark"
 								onClick={handleCloseEditCustomer}>
-								Cancel
-							</button>
-							<button
+								Close
+							</Button>
+							<Button
 								variant="primary"
-								className="btn btn-brand"
 								type="submit">
-								Save
-							</button>
-						</div>
+								Update Customer
+							</Button>
+						</Modal.Footer>
 					</Form>
 				</Modal.Body>
 			</Modal>
@@ -427,37 +430,33 @@ function CustomerList({ customers, customerError }) {
 	);
 }
 
-export default CustomerList;
-
 export async function getServerSideProps(context) {
+	const session = await getSession(context);
 	const END_POINT =
 		process.env.NEXT_PUBLIC_NEXT_API_URL || "https://washmanapp.vercel.app/";
-	try {
-		const session = await getSession(context);
-		const email = session?.user?.email;
-		if (!session || session.user.status == "2FA") {
-			return {
-				redirect: {
-					destination: `${process.env.VERIFY_URL}?email=${email}`, //redirect to login page
-					permanent: false,
-				},
-			};
-		}
 
-		const response = await fetch(`${END_POINT}/customers`);
-		const data = await response.json();
-
+	if (!session) {
 		return {
-			props: {
-				customers: data,
-			},
-		};
-	} catch (error) {
-		return {
-			props: {
-				customers: [],
-				customerError: "Error fetching customers: " + error.message,
+			redirect: {
+				destination: "/auth/signin",
+				permanent: false,
 			},
 		};
 	}
+
+	const res = await fetch(`${END_POINT}/customers`);
+	let customers = [];
+	let customerError = null;
+
+	if (res.ok) {
+		customers = await res.json();
+	} else {
+		customerError = "Failed to fetch customers";
+	}
+
+	return {
+		props: { customers, customerError },
+	};
 }
+
+export default CustomerList;
