@@ -18,32 +18,23 @@ function SignIn() {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		setLoading(true); // Start loading
-
+		setLoading(true);
 		const res = await signIn("credentials", {
 			redirect: false,
 			email,
 			password,
 		});
-
 		if (res.error) {
 			setError("Invalid email or password");
 		} else {
 			setError("");
-			console.log("twoFactorEnabled:", session.user.twoFactorEnabled)
-			// if (session.user.twoFactorEnabled == true) {
-			// 	router.push({
-			// 		pathname: "/verification",
-			// 		query: { email },
-			// 	});
-			// } else {
-			// 	router.push("/dashboard");
-			// }
-			router.push("/dashboard");
-
+			if (session.user?.twoFactorEnabled === true) {
+				router.push({ pathname: "/verification", query: { email } });
+			} else {
+				router.push("/dashboard");
+			}
 		}
-
-		setLoading(false); // Stop loading regardless of success or failure
+		setLoading(false);
 	};
 
 	return (
