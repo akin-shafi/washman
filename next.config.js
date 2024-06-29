@@ -1,10 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
 	reactStrictMode: true,
-	assetPrefix: process.env.ASSET_PREFIX || "",
-	publicRuntimeConfig: {
-		BASE_URL: process.env.BASE_URL || "https://washman.onrender.com",
-	},
+	// assetPrefix: process.env.ASSET_PREFIX || "",
+	// publicRuntimeConfig: {
+	// 	BASE_URL: process.env.BASE_URL || "https://washman.onrender.com",
+	// },
 	images: {
 		remotePatterns: [
 			{
@@ -14,8 +14,8 @@ const nextConfig = {
 			},
 		],
 		// Optionally specify the loader and path for custom optimization
-		loader: "default",
-		path: "/public/images",
+		// loader: "default",
+		// path: "/public/images",
 	},
 	experimental: {
 		largePageDataBytes: 128 * 100000,
