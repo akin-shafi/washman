@@ -180,7 +180,7 @@ function UserList({ services }) {
 										</thead>
 										<tbody>
 											{currentservices.map((user, index) => (
-												<tr key={user.id}>
+												<tr key={index}>
 													<td>{indexOfFirstUser + index + 1}</td>
 													<td>{user.name}</td>
 													<td>{user.email}</td>

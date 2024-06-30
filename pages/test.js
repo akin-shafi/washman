@@ -18,7 +18,7 @@ const Home = ({ services, error, endpoint }) => {
 	});
 	const [loading, setLoading] = useState(true);
 	const [logoLoaded, setLogoLoaded] = useState(false);
-	useEffect(() => {
+    useEffect(() => {
 		if (services.length > 0 || error) {
 			setLoading(false);
 		}
@@ -81,13 +81,7 @@ const Home = ({ services, error, endpoint }) => {
 								<div className="col-xl-12 col-lg-6 col-12">
 									<div className="intro-slider">
 										<div className="slider-item text-center">
-											<img
-												src="../images/slide.png"
-												alt=""
-												width="800"
-												className={`img-fluid`}
-											/>
-											{/* {!logoLoaded && (
+											{!logoLoaded && (
 												<Skeleton
 													height={200}
 													width={800}
@@ -99,7 +93,7 @@ const Home = ({ services, error, endpoint }) => {
 												width="800"
 												className={`img-fluid ${logoLoaded ? "" : "d-none"}`}
 												onLoad={handleLogoLoad}
-											/> */}
+											/>
 										</div>
 									</div>
 								</div>
